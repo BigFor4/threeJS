@@ -6,7 +6,7 @@ import { GUI } from '/jsm/libs/dat.gui.module.js'
 let scene;
 let camera;
 let renderer;
-const canvas = document.querySelector('.webgl');
+const canvas = document.querySelector('.solarsystem');
 
 scene = new THREE.Scene();
 
@@ -40,11 +40,8 @@ const sunGeometry = new THREE.SphereGeometry(1.2, 32, 32);
 const sunMaterial = new THREE.MeshBasicMaterial({
     map: THREE.ImageUtils.loadTexture('img/sun.jpg'),
 });
-
-
 const sunMesh = new THREE.Mesh(sunGeometry, sunMaterial);
 scene.add(sunMesh);
-
 
 const sunMeshFolder = gui.addFolder('sunMesh')
 sunMeshFolder.add(sunMesh.rotation, 'x', 0, Math.PI * 2)
@@ -66,13 +63,10 @@ function createRing(size ){
 }
 //Tạo quỹ đạo cho sao thủy
 const trajectoryMercuryGeometry = createRing(1.8);
-
 //Tạo quỹ đạo cho sao kim
 const trajectoryVenusGeometry = createRing(2.5);
-
 //Tạo quỹ đạo cho trái đất
 const trajectoryEarthGeometry = createRing(4);
-
 //Tạo quỹ đạo cho sao hỏa
 const trajectoryMarsGeometry = createRing(6);
 //Tạo quỹ đạo cho trái đất
@@ -95,10 +89,10 @@ function createPlanet(size , img , positionX ){
     // const material = new THREE.MeshStandardMaterial({
     //     map: THREE.ImageUtils.loadTexture(img),
     // });
-    const material = new THREE.MeshBasicMaterial({
+    const material = new THREE.MeshStandardMaterial({
         map: THREE.ImageUtils.loadTexture(img),
     });
-    const pointLight = new THREE.PointLight(0xFFFFFF , 2 , 10);
+    const pointLight = new THREE.PointLight(0xFFFFFF , 0.5 , 15);
     scene.add(pointLight);
 
 
@@ -133,6 +127,8 @@ const neptune = createPlanet(0.2,'img/neptunemap.jpg',12);
 
 const plutomap = createPlanet(0.15,'img/plutomap1k.jpg',13);
 
+//Tạo nhẫn cho sao thổ
+
 const beltSaturnGeometry = new THREE.RingGeometry(0.8, 0.6, 100 );
 const beltSaturnMaterial = new THREE.MeshBasicMaterial( {
     map: THREE.ImageUtils.loadTexture('img/saturnmap.jpg'),
@@ -159,7 +155,7 @@ earth.mesh.add(moonMesh);
 const starGeometry = new THREE.SphereGeometry(800, 64, 64);
 
 
-const starMaterial = new THREE.MeshBasicMaterial({
+const starMaterial = new THREE.MeshStandardMaterial({
     map : THREE.ImageUtils.loadTexture('img/sao.png'),
     side: THREE.BackSide
 });
