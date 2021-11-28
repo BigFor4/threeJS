@@ -1,7 +1,7 @@
 import * as THREE from '/build/three.module.js';
 import { OrbitControls } from '/jsm/controls/OrbitControls.js';
 //import { MapControls } from '/jsm/controls/OrbitControls.js';
-
+import { GUI } from '/jsm/libs/dat.gui.module.js'
 
 let scene;
 let camera;
@@ -28,6 +28,7 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 
 const controls = new OrbitControls(camera, renderer.domElement);
 
+const gui = new  GUI();
 
 //const controls = new MapControls( camera, renderer.domElement );
 
@@ -44,6 +45,17 @@ const sunMaterial = new THREE.MeshBasicMaterial({
 const sunMesh = new THREE.Mesh(sunGeometry, sunMaterial);
 scene.add(sunMesh);
 
+
+const sunMeshFolder = gui.addFolder('sunMesh')
+sunMeshFolder.add(sunMesh.rotation, 'x', 0, Math.PI * 2)
+sunMeshFolder.add(sunMesh.rotation, 'y', 0, Math.PI * 2)
+sunMeshFolder.add(sunMesh.rotation, 'z', 0, Math.PI * 2)
+sunMeshFolder.open()
+const cameraFolder = gui.addFolder('Camera')
+cameraFolder.add(camera.position, 'z', 0, 10)
+cameraFolder.add(camera.position, 'y', 0, 10)
+cameraFolder.add(camera.position, 'x', 0, 10)
+cameraFolder.open()
 
 function createRing(size ){
     const geometry = new THREE.RingGeometry(size, size+0.01, 100 );
@@ -177,7 +189,9 @@ const animate = () => {
     earth.mesh.rotation.y -= 0.004;
     earth.obj.rotation.y -= 0.003;
     mercury.obj.rotation.y -= 0.002;
+    mercury.mesh.rotation.y -= 0.02;
     saturn.obj.rotation.y -= 0.004;
+    saturn.mesh.rotation.y -= 0.04;
     sunMesh.rotation.y -= 0.003;
     venus.obj.rotation.y -= 0.005;
     jupiter.obj.rotation.y -= 0.006;
@@ -185,6 +199,13 @@ const animate = () => {
     uranus.obj.rotation.y -= 0.008;
     neptune.obj.rotation.y -= 0.009;
     plutomap.obj.rotation.y -= 0.01;
+
+    venus.mesh.rotation.y -= 0.005;
+    jupiter.mesh.rotation.y -= 0.006;
+    mars.mesh.rotation.y -= 0.007;
+    uranus.mesh.rotation.y -= 0.008;
+    neptune.mesh.rotation.y -= 0.009;
+    plutomap.mesh.rotation.y -= 0.01;
     controls.update();
     render();
     
